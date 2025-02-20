@@ -15,5 +15,5 @@ func main() {
 	// http.ListenAndServe(fmt.Sprintf(":%s", utils.GetConfigs().PORT), nil)
 
 	uc := bills.NewParseBillFile(providers.NewEnelProvider())
-	uc.Execute("/tmp/testing.txt")
+	uc.Execute("./storage/bill_files/test.pdf")
 }

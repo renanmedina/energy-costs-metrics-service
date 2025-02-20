@@ -1,0 +1,6 @@
+storage/bill_files/converted/*
+!storage/bill_files/converted/.keep
+storage/bill_files/*.pdf
+storage/bill_files/*.png
+storage/bill_files/*.jpeg
+storage/bill_files/*.jpg
