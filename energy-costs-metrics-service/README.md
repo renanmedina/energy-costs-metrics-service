@@ -21,7 +21,7 @@ docker run --build
 Install the tesseract dependency before running the code
 
 ```bash
-sudo apt-get update && apt-get install tesseract-ocr libtesseract-dev
+apt-get update && apt-get install -y tesseract-ocr tesseract-ocr-por libtesseract-dev poppler-utils
 ```
 
 Run the application

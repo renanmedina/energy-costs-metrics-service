@@ -3,6 +3,7 @@ package bills
 import (
 	"fmt"
 
+	"github.com/renanmedina/energy-costs-metrics-service/internal/bills/bill_files"
 	"github.com/renanmedina/energy-costs-metrics-service/internal/bills/providers"
 	"github.com/renanmedina/energy-costs-metrics-service/utils"
 )
@@ -13,8 +14,10 @@ type ParseBillFile struct {
 }
 
 func (uc ParseBillFile) Execute(filepath string) {
+	defer uc.logger.Info(fmt.Sprintf("Finished parsing bill with %s provider for file %s", uc.provider.CompanyName(), filepath))
+
 	uc.logger.Info(fmt.Sprintf("Starting parsing bill with %s provider for file %s", uc.provider.CompanyName(), filepath))
-	billFile := NewBillFile(filepath)
+	billFile := bill_files.NewEnergyBillFile(filepath)
 	uc.logger.Info(fmt.Sprintf("Reading bill file %s", filepath))
 	fileText, err := billFile.Read()
 
@@ -26,12 +29,11 @@ func (uc ParseBillFile) Execute(filepath string) {
 	parsedInfo, err := uc.provider.ParseBillFileText(fileText)
 
 	if err != nil {
-		uc.logger.Error(err.Error())
+		uc.logger.Error(fmt.Sprintf("Failed to parse bill file with %s provider for file %s: %s", uc.provider.CompanyName(), filepath, err.Error()), "error", err)
 		return
 	}
 
-	uc.logger.Info("Parsed successfully", "parsed_info", parsedInfo)
-	uc.logger.Info(fmt.Sprintf("Finished parsing bill with %s provider for file %s", uc.provider.CompanyName(), filepath))
+	uc.logger.Info(fmt.Sprintf("Successfully parsed bill file with %s provider for file %s", uc.provider.CompanyName(), filepath), "parsed_info", parsedInfo)
 }
 
 func NewParseBillFile(companyProvider providers.EnergyCompanyProvider) ParseBillFile {
