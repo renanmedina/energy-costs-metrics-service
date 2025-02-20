@@ -1,19 +1,19 @@
 package main
 
 import (
-	"context"
-	"fmt"
-	"net/http"
-
-	"github.com/renanmedina/energy-costs-metrics-service/handlers"
+	"github.com/renanmedina/energy-costs-metrics-service/internal/bills"
+	"github.com/renanmedina/energy-costs-metrics-service/internal/bills/providers"
 )
 
 func main() {
-	ctx := context.Background()
-	tracer := InitTracer()
-	defer tracer.Shutdown(ctx)
+	// ctx := context.Background()
+	// tracer := InitTracer()
+	// defer tracer.Shutdown(ctx)
 
-	http.HandleFunc("/metrics/process-from-filepath", handlers.ProcessMetricFromFilePathHandler)
-	http.HandleFunc("/metrics", handlers.PrometheusMetrics)
-	http.ListenAndServe(fmt.Sprintf(":%s", GetConfigs().PORT), nil)
+	// http.HandleFunc("/metrics/process-from-filepath", handlers.ProcessMetricFromFilePathHandler)
+	// http.HandleFunc("/metrics", handlers.PrometheusMetrics)
+	// http.ListenAndServe(fmt.Sprintf(":%s", utils.GetConfigs().PORT), nil)
+
+	uc := bills.NewParseBillFile(providers.NewEnelProvider())
+	uc.Execute("/tmp/testing.txt")
 }

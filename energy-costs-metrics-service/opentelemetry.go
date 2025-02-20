@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 
+	"github.com/renanmedina/energy-costs-metrics-service/utils"
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/attribute"
 	"go.opentelemetry.io/otel/codes"
@@ -42,8 +43,8 @@ func (tc *TraceUnit) NewChildSpan(spanName string) *TraceUnit {
 }
 
 var (
-	configs           = GetConfigs()
-	applicationLogger = GetApplicationLogger()
+	configs           = utils.GetConfigs()
+	applicationLogger = utils.GetApplicationLogger()
 	tracer            trace.Tracer
 )
 
