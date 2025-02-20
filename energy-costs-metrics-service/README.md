@@ -5,6 +5,7 @@ A repository to ocr and parse energy bills and serve metrics to prometheus
 ## Dependencies
 - Golang 1.24
 - [Tesseract OCR](https://github.com/tesseract-ocr/tesseract): using the C linked library libtesseract-dev into golang program
+- [qpdf](https://github.com/qpdf/qpdf): Used to handle encrypted pdf files if needed
 - pdftoppm (sudo apt-get install poppler-utils)
 - AWS S3 Bucket
 
